@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 像素风格基础样式 */
+@layer base {
+  * {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    /* 微信浏览器兼容性 */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  html, body {
+    /* 防止微信浏览器下拉刷新 */
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    /* 修复微信浏览器高度问题 */
+    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+  
+  body {
+    @apply bg-pixel-bg font-pixel text-pixel-dark;
+    font-size: 14px;
+    line-height: 1.4;
+    /* 微信浏览器字体优化 */
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  #root {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+  
+  button {
+    @apply transition-all duration-150;
+    image-rendering: pixelated;
+  }
+  
+  button:active {
+    transform: translateY(1px);
+  }
+}
+
+@layer components {
+  .pixel-button {
+    @apply bg-pixel-primary text-pixel-dark px-4 py-2 border-2 border-pixel-dark;
+    @apply hover:bg-opacity-80 active:translate-y-0.5;
+    box-shadow: 2px 2px 0px theme('colors.pixel.dark');
+  }
+  
+  .pixel-button:active {
+    box-shadow: 1px 1px 0px theme('colors.pixel.dark');
+  }
+  
+  .pixel-screen {
+    @apply bg-pixel-dark border-4 border-pixel-dark p-2 sm:p-4;
+    box-shadow: inset 2px 2px 4px rgba(0,0,0,0.3);
+    /* 响应式适配 */
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    /* 确保内容居中 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* 移动端优化 */
+    min-height: 200px;
+  }
+  
+  /* 移动端按钮优化 */
+  @media (max-width: 640px) {
+    .pixel-button {
+      @apply px-3 py-2 text-sm;
+      min-height: 44px; /* iOS推荐的最小触摸目标 */
+      min-width: 44px;
+    }
+    
+    /* 移动端字体大小调整 */
+    body {
+      font-size: 16px; /* 防止iOS缩放 */
+    }
+  }
+  
+  .pixel-progress {
+    @apply bg-gray-300 border border-pixel-dark h-4 relative overflow-hidden;
+  }
+  
+  .pixel-progress-fill {
+    @apply h-full transition-all duration-300;
+  }
+}
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
